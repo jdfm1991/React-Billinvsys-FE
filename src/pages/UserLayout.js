@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import HeaderLayout from "../components/HeaderLayout";
 import UserLeftSide from "../components/UserLeftSide";
 import UserRightSide from "../components/UserRightSide";
 import UserState from "../context/User/UserState";
+import AuthContext from "../context/Auth/AuthContext";
 
 const UserLayout = () => {
+
+    const {loadlog,cookieValidate} = useContext(AuthContext)
+
+    useEffect( () => {
+        cookieValidate()
+    },[loadlog])
+
    
     return(
         <>

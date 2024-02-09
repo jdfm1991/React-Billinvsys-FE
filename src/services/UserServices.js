@@ -1,6 +1,4 @@
-import axios from "axios";
-
-const URI = process.env.REACT_APP_DB_URI
+import axios from "./AxiosServices";
 
 //Funcion de Accion Para Datos Iniciales
 export async function saveDataUser(userData){
@@ -19,7 +17,7 @@ export async function saveDataUser(userData){
         data.append('image',image)
 
         const res = await axios({
-            url:`${URI}/user`,
+            url:`/user`,
             method:'POST',
             data: data
         })
@@ -33,8 +31,8 @@ export async function saveDataUser(userData){
 export async function getDataUsers(){
     try {
         const res = await axios({
-            url:`${URI}/user`,
-            method:'GET'
+            url:`/user`,
+            method:'GET',
         })
         return res
     } catch (error) {
@@ -45,7 +43,7 @@ export async function getDataUsers(){
 export async function getDataUser(id){
     try {
         const res = await axios({
-            url:`${URI}/user/${id}`,
+            url:`/user/${id}`,
             method:'GET',
         })
         return res
@@ -58,7 +56,7 @@ export async function getDataUser(id){
 export async function deleteDataUser(id){
     try {
         const res = await axios({
-            url:`${URI}/user/${id}`,
+            url:`/user/${id}`,
             method:'DELETE'
         })
         return res
@@ -81,7 +79,7 @@ export async function updateDataUser(userData){
         data.append('image',userData.image)
 
         const res = await axios({
-            url:`${URI}/user/${id}`,
+            url:`/user/${id}`,
             method:'PUT',
             data: data
         })

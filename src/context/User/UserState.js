@@ -1,4 +1,5 @@
 import React, { useReducer} from "react";
+import Cookies from "js-cookie";
 import { deleteDataUser, getDataUser, getDataUsers, saveDataUser, updateDataUser } from "../../services/UserServices";
 import UserReducer from "./UserReducer";
 import UserContext from "./UserContext";
@@ -122,6 +123,7 @@ const UserState = (props) => {
     }
 
     const getUsersList = async () => {
+
         const res = await getDataUsers()
         dispatch({
             type: 'GET_USERS',

@@ -16,7 +16,6 @@ const AuthState = (props) => {
 
     const [state, dispatch] = useReducer(AuthReducer,initialState)
 
-
     const getSession = async(data) => {
         const res = await getDataLogin(data)
         
@@ -51,7 +50,6 @@ const AuthState = (props) => {
         const res = await eraseDataLogin()
         return res
     }
-
 
     const handleMessage = (message) => {
         dispatch({
