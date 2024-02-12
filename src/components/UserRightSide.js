@@ -4,7 +4,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 import UserFormModal, {  } from "./UserFormModal";
-import logo from "../logo.png"
+import logo from "../assets/logo.png"
 
 import UserContext from "../context/User/UserContext";
 

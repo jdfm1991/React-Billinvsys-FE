@@ -1,12 +1,14 @@
-import React, { useReducer} from "react";
+import React, { useEffect, useReducer} from "react";
 import Cookies from "js-cookie";
-import { eraseDataLogin, getDataLogin, tokenVerifiqued } from "../../services/AuthSevices";
+import { eraseDataLogin, getDataLogin, getDepartmentApp, getModuleApp, tokenVerifiqued } from "../../services/AuthSevices";
 import AuthReducer from "./AuthReducer";
 import AuthContext from "./AuthContext";
 
 const AuthState = (props) => {
 
     const initialState = {
+        department: [],
+        module: [],
         login : [],
         statuslog: false,
         loadlog:true,
@@ -15,6 +17,31 @@ const AuthState = (props) => {
     }
 
     const [state, dispatch] = useReducer(AuthReducer,initialState)
+
+    const getDepartment = async () => {
+        const resD = await getDepartmentApp()
+        dispatch({
+            type: 'GET_DEPARTMENT',
+            payload: resD.data,   
+        })
+        for (let i = 0; i < resD.data.length; i++) {
+            const id = resD.data[i];
+            const resM = await getModuleApp(id)
+            dispatch({
+                type: 'GET_MODULE',
+                payload: resM.data,   
+            })
+            
+        }
+    }
+
+    const getModule = async (id) => {
+        const res = await getModuleApp(id)
+        dispatch({
+            type: 'GET_MODULE',
+            payload: res.data,   
+        })
+    }
 
     const getSession = async(data) => {
         const res = await getDataLogin(data)
@@ -39,14 +66,12 @@ const AuthState = (props) => {
                 },   
             }) 
             handleClose()
-            window.location.reload()
         }
 
         return res
     }
 
     const closeSession = async() => {
-
         const res = await eraseDataLogin()
         return res
     }
@@ -116,16 +141,21 @@ const AuthState = (props) => {
     
     return(
         <AuthContext.Provider value={{
-            login:state.login,
+            department: state.department,
+            module: state.module,
+            login: state.login,
             statuslog: state.statuslog,
             loadlog: state.loadlog,
             show: state.show,
-            message:state.message,
-            getSession:getSession,
-            handleShow:handleShow,
-            handleClose:handleClose,
-            cookieValidate:cookieValidate,
-            closeSession:closeSession
+            message: state.message,
+            cookieValidate,
+            getDepartment,
+            getModule,
+            handleShow,
+            getSession,
+            handleMessage,
+            handleClose,
+            closeSession
             }}>
             {props.children}
         </AuthContext.Provider>

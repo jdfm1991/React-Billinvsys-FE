@@ -1,10 +1,20 @@
-import { AUTHCOOKIE, GET_LOGIN, LOGOUT, MESSAGE, VIEW_MODAL } from "../types";
+import { AUTHCOOKIE, GET_DEPARTMENT, GET_LOGIN, GET_MODULE, LOGOUT, MESSAGE, VIEW_MODAL } from "../types";
 
 export default (state, action) => {
 
     const {type,payload} = action
-
+    
     switch (type) {
+        case GET_DEPARTMENT:
+            return {
+                ...state,
+                department : payload
+            }
+        case GET_MODULE:
+            return {
+                ...state,
+                module : payload
+            }
         case GET_LOGIN:
             return {
                 ...state,

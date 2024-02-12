@@ -16,7 +16,6 @@ const UserLayout = () => {
    
     return(
         <>
-            <HeaderLayout /> 
             <UserState>
                 <div className="container-fluid">
                     <div className="justify-content-center">

@@ -1,5 +1,30 @@
 import axios from "./AxiosServices";
 
+export async function getDepartmentApp() {
+    try {        
+        const res = await axios({
+            url:`/department`,
+            method:'get',
+        })
+        return res
+    } catch (error) {
+        return error.response
+    }
+    
+}
+
+export async function getModuleApp() {
+    try {        
+        const res = await axios({
+            url:`/module`,
+            method:'get',
+        })
+        return res
+    } catch (error) {
+        return error.response
+    }
+    
+}
 //Funcion de Accion Para Datos Iniciales
 export async function getDataLogin(userData){
     try {

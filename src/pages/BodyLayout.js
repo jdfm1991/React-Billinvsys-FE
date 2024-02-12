@@ -1,10 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import Image from 'react-bootstrap/Image';
 
-import HeaderLayout from "../components/HeaderLayout";
-
 import AuthContext from "../context/Auth/AuthContext";
-
 
 const BodyLayout = () => {
 
@@ -16,7 +13,6 @@ const BodyLayout = () => {
    
     return(
         <>  
-            <HeaderLayout />
             <section id="about" className="about">
                 <div className="container">
 
