@@ -1,4 +1,5 @@
-import React, { useEffect, useReducer} from "react";
+import React, { useReducer} from "react";
+import Swal from 'sweetalert2'
 import Cookies from "js-cookie";
 import { eraseDataLogin, getDataLogin, getDepartmentApp, getModuleApp, tokenVerifiqued } from "../../services/AuthSevices";
 import AuthReducer from "./AuthReducer";
@@ -68,12 +69,22 @@ const AuthState = (props) => {
             handleClose()
         }
 
+        if (res.data.message) {
+            Swal.fire({
+                icon: "success",
+                title: "Good job!",
+                text: "Welcome "+ res.data.name,
+                showConfirmButton: false,
+                timer: 1500
+              });
+        }
+
         return res
     }
 
     const closeSession = async() => {
-        const res = await eraseDataLogin()
-        return res
+        await eraseDataLogin()
+        window.location.reload();
     }
 
     const handleMessage = (message) => {

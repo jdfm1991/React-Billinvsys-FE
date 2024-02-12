@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import HeaderLayout from "../components/HeaderLayout";
 import UserLeftSide from "../components/UserLeftSide";
 import UserRightSide from "../components/UserRightSide";
 import UserState from "../context/User/UserState";

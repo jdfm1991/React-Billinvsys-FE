@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
+import { Message } from 'primereact/message'
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -11,13 +12,12 @@ import logo from "../assets/logo.png"
 const AuthFormModal = () => {
 
     const {getSession,message,handleClose,handleMessage} = useContext(AuthContext)
-
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault(); 
-        const res = await getSession({
+        getSession({
             email:email,
             password:password,
         })
@@ -44,7 +44,14 @@ const AuthFormModal = () => {
                                 <Form.Control type="password" className="form-control form-control-sm" name="password" placeholder="Contraseña Por Favor"  value={ password } onChange={ (e) => setPassword(e.target.value)} required />
                             </Form.Group>
                         </Form.Group>
-                        <p className={message?"p-2 mb-2 bg-danger-subtle text-emphasis-danger":''}> { message } </p>
+                        {
+                            message ?
+                            <div className="flex flex-wrap align-items-center justify-content-center gap-3">
+                                <Message severity="error" text={message} />
+                            </div>
+                            : ''
+                        }
+                        <br/>
                     </Form.Group>
                 </Modal.Body>
                 <Modal.Footer className="card-footer">
