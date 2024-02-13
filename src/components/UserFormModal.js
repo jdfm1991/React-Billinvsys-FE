@@ -6,7 +6,7 @@ import UserContext from "../context/User/UserContext";
 
 const UserFormModal = () => {
 
-    const {user, deleteUser,handleClose,handleSubmit,message,firstView,enable,changeStatus,displaythree,displayfour} = useContext(UserContext)
+    const {user, deleteUser,handleClose,handleSubmit,message,firstView,enable,changeStatus,displaythree,displayfour,getTypes,usertypes} = useContext(UserContext)
     
     const [id, setId] = useState('')
     const [name, setName] = useState('')
@@ -23,15 +23,7 @@ const UserFormModal = () => {
         setEmail(user.email)
         setCategory(user.category)
         setPassword(user.password)
-    }, [user])
-
-    useEffect( () => {
-        setId(user._id)
-        setName(user.name)
-        setStatus(user.status)
-        setEmail(user.email)
-        setCategory(user.category)
-        setPassword(user.password)
+        getTypes()
     }, [user])
 
     const resetForm = () => {
@@ -91,8 +83,11 @@ const UserFormModal = () => {
                             <Form.Group className='col-sm-7'>
                                 <Form.Select className="form-select form-control-sm" name="category" value={ category}  onChange={ (e) => setCategory(e.target.value)} disabled={enable}>
                                     <option value='-'>seleciones </option>
-                                    <option value='1'>activo</option>
-                                    <option value='0'>desactivo</option>
+                                    {
+                                        usertypes.map((type) => (
+                                            <option key={type._id} value={type._id}> {type.name} </option>
+                                        ))
+                                    }
                                 </Form.Select>
                             </Form.Group>
                             <div className='col-sm-3'></div>

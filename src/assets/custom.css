@@ -82,7 +82,7 @@ table thead {
     
   }
   #btntable {
-    display: flex;
+    display: block;
     float: inline-end;
   }
   .btnmodal{

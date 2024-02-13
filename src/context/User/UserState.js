@@ -1,5 +1,5 @@
 import React, { useReducer} from "react";
-import { deleteDataUser, getDataUser, getDataUsers, saveDataUser, updateDataUser } from "../../services/UserServices";
+import { deleteDataUser, getDataUser, getDataUsers, getUserTypes, saveDataUser, updateDataUser } from "../../services/UserServices";
 import UserReducer from "./UserReducer";
 import UserContext from "./UserContext";
 
@@ -8,6 +8,7 @@ const UserState = (props) => {
     const initialState = {
         users: [],
         user: [],
+        usertypes: [],
         show: false,
         title: null,
         message: null,
@@ -143,6 +144,16 @@ const UserState = (props) => {
         })
     }
 
+    const getTypes = async (id) => {
+        const res = await getUserTypes()
+        dispatch({
+            type: 'GET_USERTYPE',
+            payload: res.data
+        })
+    }
+
+
+
     const deleteUser = async (id) => {
         const res = await deleteDataUser(id)
         console.log(res)
@@ -153,6 +164,7 @@ const UserState = (props) => {
         <UserContext.Provider value={{
             users: state.users,
             user: state.user,
+            usertypes: state.usertypes,
             show: state.show,
             title: state.title,
             message: state.message,
@@ -161,15 +173,16 @@ const UserState = (props) => {
             displaythree: state.displaythree,
             displayfour: state.displayfour,
             enable: state.enable,
-            handleSubmit:handleSubmit,
-            getUsersList:getUsersList,
-            getUser:getUser,
-            deleteUser:deleteUser,
-            handleShow:handleShow,
-            handleClose:handleClose,
-            firstView:firstView,
-            secondView:secondView,
-            changeStatus:changeStatus
+            handleSubmit,
+            getUsersList,
+            getUser,
+            deleteUser,
+            handleShow,
+            handleClose,
+            firstView,
+            secondView,
+            changeStatus,
+            getTypes
             }}>
             {props.children}
         </UserContext.Provider>

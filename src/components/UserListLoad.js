@@ -60,10 +60,10 @@ const UserListLoad = () => {
 
     const renderHeader = () => {
         return (
-            <div className="flex justify-content-end">
+            <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                 <span className="p-input-icon-left">
                     <i className="pi pi-search" />
-                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
+                    <InputText className="p-inputtext-sm" value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
                 </span>
             </div>
         );
@@ -79,7 +79,7 @@ const UserListLoad = () => {
 
     return(
         <> 
-        <div className="card">
+        <div className="">
             <DataTable 
             //Datos de Carga de la tabla
             value={users} 
@@ -108,7 +108,7 @@ const UserListLoad = () => {
             </DataTable>
         </div> 
         <Dialog header="Opciones a Realizar" visible={dialogVisible} style={{ minWidth:'60vw' }} maximizable
-        modal contentStyle={{ height: '300px' }} onHide={() => setDialogVisible(false)} >
+        modal contentStyle={{ height: '25vw', width:'60vw' }} onHide={() => setDialogVisible(false)} >
             <div className="container">
                 <div className="container-fluid">
                     <div className="justify-content-center align-items-center g-2 text-center">

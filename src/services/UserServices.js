@@ -40,6 +40,18 @@ export async function getDataUsers(){
     }
 }
 
+export async function getUserTypes(){
+    try {
+        const res = await axios({
+            url:`/usertype`,
+            method:'GET',
+        })
+        return res
+    } catch (error) {
+        return error.response
+    }
+}
+
 export async function getDataUser(id){
     try {
         const res = await axios({
