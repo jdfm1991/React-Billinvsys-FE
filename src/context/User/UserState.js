@@ -26,7 +26,7 @@ const UserState = (props) => {
         dispatch({
             type: 'SHOWBTN',
             payload: {
-                view1: view1 === 'none' ? 'flex' : 'none',
+                view1: view1 === 'none' ? 'block' : 'none',
                 view2: view2 === 'flex' ? 'none' : 'flex',
                 view3: 'flex',
                 view4: 'none',
@@ -38,7 +38,7 @@ const UserState = (props) => {
         dispatch({
             type: 'SHOWBTN',
             payload: {
-                view1: 'flex',
+                view1: 'block',
                 view2: 'none',
                 view3: 'none',
                 view4: 'flex',

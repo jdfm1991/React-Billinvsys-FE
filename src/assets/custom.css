@@ -11,17 +11,15 @@
 #letf {
   float: left;
   width: 100%;
-  height: 450px;
-  margin: 5px;
-  padding: 5px;
+  height: 500px;
+  margin-top: 10px;
 }
 
 #right {
   float: left;
   width: 100%;
-  height: 450px;
-  margin: 5px;
-  padding: 5px;
+  height: 500px;
+  margin-top: 10px;
 }
 
 .logoright{
