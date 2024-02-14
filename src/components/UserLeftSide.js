@@ -13,7 +13,7 @@ const UserLeftSide = () =>{
     return(
         <>
             <div id="letf">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                     <div id="btntable" className="text-end">
                         <Button variant="primary" onClick={ () => handleShow() }>
                             <i className="bi bi-folder-plus">Nuevo Registro</i>

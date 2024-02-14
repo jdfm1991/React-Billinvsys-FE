@@ -96,13 +96,13 @@ const UserState = (props) => {
     const statusValidator = async (res) => {
 
         if (res.status === 500) {
-            handleMessage('Verifique la Infomacion Correo Existente')
+            handleMessage(res.statusText + ' ' + res.data.message)
         }
         if (res.status === 401) {
             handleMessage(res.statusText + ' ' + res.data.message)
         }
         if (res.status === 400) {
-            console.log(res)
+            handleMessage(res.data)
         }
         if (res.status === 201 || res.status === 200) {
             handleClose()
@@ -112,12 +112,14 @@ const UserState = (props) => {
     }
 
     const handleSubmit = async (data) => {
+        
         if (data.id) {
             const res = await updateDataUser(data)
            statusValidator(res)
         } else{
             const res = await saveDataUser(data)
             statusValidator(res)
+            console.log(res)
         }
                 
     }
@@ -182,7 +184,8 @@ const UserState = (props) => {
             firstView,
             secondView,
             changeStatus,
-            getTypes
+            getTypes,
+            handleMessage
             }}>
             {props.children}
         </UserContext.Provider>

@@ -3,23 +3,22 @@ import axios from "./AxiosServices";
 //Funcion de Accion Para Datos Iniciales
 export async function saveDataUser(userData){
     try {
-        
-        var status = userData.status ? userData.status : false
-        var image = userData.image ? userData.image : ''
 
         const data = new FormData()
 
         data.append('name',userData.name)
-        data.append('status',status)
+        data.append('status',userData.status)
         data.append('email',userData.email)
-        data.append('category',userData.category)
+        data.append('type',userData.type)
         data.append('password',userData.password)
-        data.append('image',image)
+        data.append('image',userData.image)
 
+        const dataObj = Object.fromEntries(data);
+    
         const res = await axios({
             url:`/user`,
             method:'POST',
-            data: data
+            data: dataObj
         })
         return res
     } catch (error) {
@@ -43,7 +42,7 @@ export async function getDataUsers(){
 export async function getUserTypes(){
     try {
         const res = await axios({
-            url:`/usertype`,
+            url:`/usertypes`,
             method:'GET',
         })
         return res

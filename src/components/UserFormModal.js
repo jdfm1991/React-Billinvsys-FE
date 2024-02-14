@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState, useRef} from "react";
+import { Message } from 'primereact/message'
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -6,23 +7,32 @@ import UserContext from "../context/User/UserContext";
 
 const UserFormModal = () => {
 
-    const {user, deleteUser,handleClose,handleSubmit,message,firstView,enable,changeStatus,displaythree,displayfour,getTypes,usertypes} = useContext(UserContext)
+    const {user, deleteUser,handleClose,handleSubmit,message,handleMessage,firstView,enable,changeStatus,displaythree,displayfour,getTypes,usertypes} = useContext(UserContext)
     
     const [id, setId] = useState('')
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
-    const [category, setCategory] = useState('')
+    const [type, setType] = useState('')
     const [password, setPassword] = useState('')
     const [status, setStatus] = useState(false)
     const image = useRef()
 
     useEffect( () => {
-        setId(user._id)
-        setName(user.name)
-        setStatus(user.status)
-        setEmail(user.email)
-        setCategory(user.category)
-        setPassword(user.password)
+        if (user._id) {
+            setId(user._id)
+            setName(user.name)
+            setStatus(user.status)
+            setEmail(user.email)
+            setType(user.type)
+            setPassword(user.password)
+        } else {
+            setId('')
+            setName('')
+            setStatus(false)
+            setEmail('')
+            setType('')
+            setPassword('')  
+        }
         getTypes()
     }, [user])
 
@@ -30,9 +40,9 @@ const UserFormModal = () => {
         setId('')
         setName('')
         setEmail('')
-        setCategory('')
+        setType('')
         setPassword('')
-        setStatus('')
+        setStatus(false)
     }
 
     const _passMode = () => {
@@ -41,22 +51,23 @@ const UserFormModal = () => {
         handleClose()
     }
 
-    const _handleSubmit = async (e) => {
+    const _handleSubmit = (e) => {
         e.preventDefault(); 
-        if (category===undefined) {
-            alert('Por Favor Escoja una Categoria')
-        }else{
-            await handleSubmit({
-                id:id,
+        
+            handleSubmit({
                 name:name,
                 email:email,
-                category:category,
+                type:type,
                 password:password,
                 status:status,
                 image:image
             })
-            resetForm()
-        }        
+
+            setTimeout(() => {
+                handleMessage()
+              }, 3000)
+            //resetForm()
+               
     }
 
     return(
@@ -81,8 +92,8 @@ const UserFormModal = () => {
                             <br /><br />
                             <Form.Label className='col-sm-2 col-form-label'>Categoria</Form.Label>
                             <Form.Group className='col-sm-7'>
-                                <Form.Select className="form-select form-control-sm" name="category" value={ category}  onChange={ (e) => setCategory(e.target.value)} disabled={enable}>
-                                    <option value='-'>seleciones </option>
+                                <Form.Select className="form-select form-control-sm" name="type" value={ type}  onChange={ (e) => setType(e.target.value)} disabled={enable}>
+                                    <option>seleciones </option>
                                     {
                                         usertypes.map((type) => (
                                             <option key={type._id} value={type._id}> {type.name} </option>
@@ -102,7 +113,13 @@ const UserFormModal = () => {
                             </Form.Group>
                         </Form.Group>
                     </Form.Group>
-                    <p className="fw-bold fs-5 text-center text-danger"> { message } </p>
+                    {
+                        message ?
+                        <div className="flex flex-wrap align-items-center justify-content-center gap-3">
+                            <Message severity="error" text={message} />
+                        </div>
+                        : ''
+                    }
                 </Modal.Body>
                 <Modal.Footer className="card-footer">
                     <Button variant="warning" onClick={ _passMode } >
