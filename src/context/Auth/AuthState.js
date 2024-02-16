@@ -25,19 +25,10 @@ const AuthState = (props) => {
             type: 'GET_DEPARTMENT',
             payload: resD.data,   
         })
-        for (let i = 0; i < resD.data.length; i++) {
-            const id = resD.data[i];
-            const resM = await getModuleApp(id)
-            dispatch({
-                type: 'GET_MODULE',
-                payload: resM.data,   
-            })
-            
-        }
     }
 
-    const getModule = async (id) => {
-        const res = await getModuleApp(id)
+    const getModule = async () => {
+        const res = await getModuleApp()
         dispatch({
             type: 'GET_MODULE',
             payload: res.data,   

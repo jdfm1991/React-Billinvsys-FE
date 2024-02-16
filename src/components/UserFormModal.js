@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState, useRef} from "react";
+import { MultiSelect } from 'primereact/multiselect';
 import { Message } from 'primereact/message'
 import { Steps } from 'primereact/steps';
 import { Toast } from 'primereact/toast';
@@ -13,17 +14,39 @@ import { Card } from "react-bootstrap";
 
 const UserFormModal = () => {
 
-    const {user, deleteUser,handleClose,handleSubmit,message,handleMessage,firstView,enable,changeStatus,displaythree,displayfour,getTypes,usertypes} = useContext(UserContext)
+    const {
+        user,
+        usertypes,
+        departments,
+        department,
+        modules,
+        module,
+        message,
+        getDepartment,
+        getTypes,
+        getModule,
+        handleMessage,
+        handleClose,
+        handleSubmit,
+        firstView,
+        enable,
+        changeStatus,
+        displaythree,
+        displayfour
+    } = useContext(UserContext)
     
     const [id, setId] = useState('')
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [type, setType] = useState('')
+    const [depart, setDepart] = useState([])
     const [password, setPassword] = useState('')
     const [status, setStatus] = useState(false)
     const image = useRef()
     const [activeIndex, setActiveIndex] = useState(0);
     const toast = useRef(null);
+
+    const itemSelect = [];
 
     const items = [
         {
@@ -50,15 +73,19 @@ const UserFormModal = () => {
             setEmail(user.email)
             setType(user.type)
             setPassword(user.password)
+            setDepart(department) 
         } else {
             setId('')
             setName('')
             setStatus(false)
             setEmail('')
             setType('')
-            setPassword('')  
+            setPassword('') 
+            setDepart('') 
         }
         getTypes()
+        getDepartment()
+        getModule()
         $('#form2').hide()
     }, [user])
 
@@ -69,6 +96,7 @@ const UserFormModal = () => {
         setType('')
         setPassword('')
         setStatus(false)
+        setDepart('')
     }
 
     const _passMode = () => {
@@ -79,23 +107,30 @@ const UserFormModal = () => {
 
     const _handleSubmit = (e) => {
         e.preventDefault(); 
-        
-            handleSubmit({
-                name:name,
-                email:email,
-                type:type,
-                password:password,
-                status:status,
-                image:image
-            })
+        handleSubmit({
+            id:id,
+            name:name,
+            email:email,
+            type:type,
+            depart:depart,
+            password:password,
+            status:status,
+            image:image
+        })
 
-            setTimeout(() => {
-                handleMessage()
-              }, 3000)
-            //resetForm()
+        setTimeout(() => {
+        handleMessage()
+        }, 8000)
+        //resetForm()
                
     }
 
+    departments.forEach( (dep) => {
+        itemSelect.push({
+            name: dep.name,
+            code: dep._id
+        })
+    })
     return(
         <>
         <Card>
@@ -108,7 +143,7 @@ const UserFormModal = () => {
                 <Modal.Body>
                     <br />
                     <div id="form1">
-                        <Form.Group className='justify-content-center align-items-center g-2 text-center'>
+                        <Form.Group className='justify-content-start align-items-center g-2 text-end'>
                             <Form.Group className='mb-3 row'>
                                 <Form.Label className='col-sm-2 col-form-label'>Nombre</Form.Label>
                                 <Form.Group className='col-sm-7'>
@@ -124,16 +159,9 @@ const UserFormModal = () => {
                                 </Form.Group>
                                 <div className='col-sm-3'></div>
                                 <br /><br />
-                                <Form.Label className='col-sm-3 col-form-label'>Departamento</Form.Label>
-                                <Form.Group className='col-sm-3'>
-                                    <Form.Select className="form-select form-control-sm" name="type" value={ type}  onChange={ (e) => setType(e.target.value)} disabled={enable}>
-                                        <option>seleciones </option>
-                                        {
-                                            usertypes.map((type) => (
-                                                <option key={type._id} value={type._id}> {type.name} </option>
-                                            ))
-                                        }
-                                    </Form.Select>
+                                <Form.Label className='col-sm-2 col-form-label'>Departamento</Form.Label>
+                                <Form.Group className='col-4'>
+                                    <MultiSelect value={depart} onChange={(e) => setDepart(e.target.value)} options={itemSelect} optionLabel="name" placeholder="Select Cities" maxSelectedLabels={1} disabled={enable} />
                                 </Form.Group>
                                 <Form.Label className='col-sm-2 col-form-label'>Tipo de Usuario</Form.Label>
                                 <Form.Group className='col-sm-3'>
@@ -180,9 +208,6 @@ const UserFormModal = () => {
                     </Button>
                     <Button variant="success" className="btncard" onClick={ changeStatus } style={{display:displayfour}}>
                         <i className="bi bi-folder-plus" >Editar</i>
-                    </Button>
-                    <Button variant="danger" className="btncard" onClick={ () => deleteUser(id)} style={{display:displayfour}}>
-                        <i className="bi bi-folder-plus">Eliminar</i>
                     </Button>
                     <Button type='submit' variant="primary" className='btnmodal' style={{display:displaythree}}>
                         Guardar

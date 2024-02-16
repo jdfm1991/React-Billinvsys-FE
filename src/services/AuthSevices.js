@@ -9,8 +9,7 @@ export async function getDepartmentApp() {
         return res
     } catch (error) {
         return error.response
-    }
-    
+    }  
 }
 
 export async function getModuleApp() {
@@ -25,6 +24,7 @@ export async function getModuleApp() {
     }
     
 }
+
 //Funcion de Accion Para Datos Iniciales
 export async function getDataLogin(userData){
     try {

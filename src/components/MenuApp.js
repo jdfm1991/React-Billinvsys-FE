@@ -14,21 +14,24 @@ const MenuApp = () => {
         department,
         module,
         cookieValidate,
-        login,
         getDepartment,
+        getModule,
         handleShow,
         handleClose,        
         statuslog,
         closeSession
     } = useContext(AuthContext)
-    const toast = useRef(null);
 
     var items = []
     var subitems = []
-
+    
     useEffect( () => {
         cookieValidate()
-        getDepartment()
+        if (statuslog) {
+            getDepartment()
+            getModule() 
+        }
+        
     },[statuslog])
 
     items = [

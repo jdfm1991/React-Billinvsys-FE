@@ -116,7 +116,7 @@ const UserListLoad = () => {
                             <div className="btn-group" role="group">
                                 <button type="button" className="btn btn-success btnmodal" onClick={ () => _handleShow(selectedUser._id)} ><i className="bi bi-pencil-square">Editar</i></button>
                                 <button type="button" className="btn btn-info btnload" onClick={ () => showData(selectedUser._id) } ><i className="bi bi-download">cargar</i></button>
-                                <button type="button" className="btn btn-danger btnmodal" onClick={ () => handleDelete(selectedUser._id)} ><i className="bi bi-trash">Eliminar</i></button>
+                                <button type="button" className="btn btn-danger" onClick={ () => handleDelete(selectedUser._id)} ><i className="bi bi-trash">Eliminar</i></button>
                             </div>
                         </div>
                     </div>

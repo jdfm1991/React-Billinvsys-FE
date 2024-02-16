@@ -1,5 +1,5 @@
 import React, { useReducer} from "react";
-import { deleteDataUser, getDataUser, getDataUsers, getUserTypes, saveDataUser, updateDataUser } from "../../services/UserServices";
+import { deleteDataUser, getDataUser, getDataUsers, getDepartments, getModules, getUserTypes, saveDataUser, updateDataUser } from "../../services/UserServices";
 import UserReducer from "./UserReducer";
 import UserContext from "./UserContext";
 
@@ -9,6 +9,10 @@ const UserState = (props) => {
         users: [],
         user: [],
         usertypes: [],
+        departments: [],
+        department: [],
+        modules: [],
+        module: [],
         show: false,
         title: null,
         message: null,
@@ -21,8 +25,7 @@ const UserState = (props) => {
 
     const [state, dispatch] = useReducer(UserReducer,initialState)
 
-    const firstView = (view1,view2) => {
-        
+    const firstView = (view1,view2) => {  
         dispatch({
             type: 'SHOWBTN',
             payload: {
@@ -47,8 +50,7 @@ const UserState = (props) => {
         })
     }
 
-    const changeStatus = () => {
-        
+    const changeStatus = () => {   
         dispatch({
             type: 'CHANGER',
             payload: {
@@ -94,7 +96,6 @@ const UserState = (props) => {
     }
 
     const statusValidator = async (res) => {
-
         if (res.status === 500) {
             handleMessage(res.statusText + ' ' + res.data.message)
         }
@@ -111,21 +112,18 @@ const UserState = (props) => {
         }
     }
 
-    const handleSubmit = async (data) => {
-        
+    const handleSubmit = async (data) => {    
         if (data.id) {
             const res = await updateDataUser(data)
            statusValidator(res)
         } else{
             const res = await saveDataUser(data)
             statusValidator(res)
-            console.log(res)
         }
                 
     }
 
     const getUsersList = async () => {
-
         const res = await getDataUsers()
         dispatch({
             type: 'GET_USERS',
@@ -142,7 +140,11 @@ const UserState = (props) => {
         const res = await getDataUser(id)
         dispatch({
             type: 'GET_USER',
-            payload: res.data
+            payload: {
+                datau: res.data.DataU,
+                datad: res.data.DepDB,
+                datam: res.data.ModDB
+            }
         })
     }
 
@@ -154,12 +156,27 @@ const UserState = (props) => {
         })
     }
 
+    const getModule = async (id) => {
+        const res = await getModules(id)
+        dispatch({
+            type: 'GET_MODULE',
+            payload: res.data
+        })
+    }
 
+    const getDepartment = async (id) => {
+        const res = await getDepartments()
+        dispatch({
+            type: 'GET_DEPARTMENT',
+            payload: res.data
+        })
+    }
 
     const deleteUser = async (id) => {
         const res = await deleteDataUser(id)
         console.log(res)
         getUsersList()
+        getUser()
     }
 
     return(
@@ -175,6 +192,10 @@ const UserState = (props) => {
             displaythree: state.displaythree,
             displayfour: state.displayfour,
             enable: state.enable,
+            departments: state.departments,
+            department: state.department,
+            modules: state.modules,
+            module: state.module,
             handleSubmit,
             getUsersList,
             getUser,
@@ -185,7 +206,9 @@ const UserState = (props) => {
             secondView,
             changeStatus,
             getTypes,
-            handleMessage
+            handleMessage,
+            getModule,
+            getDepartment
             }}>
             {props.children}
         </UserContext.Provider>

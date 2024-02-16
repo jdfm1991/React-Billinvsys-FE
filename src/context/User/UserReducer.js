@@ -1,10 +1,20 @@
-import { CHANGER, GET_USER, GET_USERS, GET_USERTYPE, MESSAGE, SHOWBTN, VIEW_MODAL } from "../types";
+import { CHANGER, GET_DEPARTMENT, GET_MODULE, GET_USER, GET_USERS, GET_USERTYPE, MESSAGE, SHOWBTN, VIEW_MODAL } from "../types";
 
 export default (state, action) => {
 
     const {type,payload} = action
     
     switch (type) {
+        case GET_DEPARTMENT:
+            return {
+                ...state,
+                departments : payload
+            }
+        case GET_MODULE:
+            return {
+                ...state,
+                modules : payload
+            }
         case GET_USERS:
             return {
                 ...state,
@@ -17,7 +27,8 @@ export default (state, action) => {
         case GET_USER:
             return {
                 ...state,
-                user : payload
+                user : payload.datau,
+                department: payload.datad
             }
         case GET_USERTYPE:
             return {
