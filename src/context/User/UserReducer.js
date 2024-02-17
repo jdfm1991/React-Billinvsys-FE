@@ -28,7 +28,8 @@ export default (state, action) => {
             return {
                 ...state,
                 user : payload.datau,
-                department: payload.datad
+                department: payload.datad,
+                module:payload.datam
             }
         case GET_USERTYPE:
             return {

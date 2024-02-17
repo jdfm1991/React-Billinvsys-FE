@@ -11,7 +11,14 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 
 const UserListLoad = () => {  
 
-    const {users, getUsersList,getUser,deleteUser,handleShow,secondView} = useContext(UserContext)
+    const {
+        users,
+        getUsersList,
+        getUserById,
+        deleteUser,
+        handleShow,
+        secondView
+    } = useContext(UserContext)
 
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [loading, setLoading] = useState(true);
@@ -33,7 +40,7 @@ const UserListLoad = () => {
     
 
     const showData = async(id) => {
-        await getUser(id)
+        await getUserById(id)
         secondView()
         setDialogVisible(false)
     }

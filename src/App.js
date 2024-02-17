@@ -19,7 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={ <BodyLayout /> } />
             <Route element={ <ProtectedViews /> }>
-              <Route path="/user" element={ <UserLayout /> } />
+              <Route path="/user" element={ <section><UserLayout /></section> } />
               <Route path="/profile" element={ <section><h1>profile</h1></section> } />
             </Route>
           </Routes>

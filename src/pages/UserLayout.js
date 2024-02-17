@@ -19,8 +19,8 @@ const UserLayout = () => {
                 <div className="container-fluid">
                     <div className="justify-content-center">
                         <div className="row">
-                            <div className="col-lg-5"><UserLeftSide  /></div>
-                            <div className="col-lg-7"><UserRightSide /></div>
+                            <div className="col-md-5 fixed-left"><UserLeftSide  /></div>
+                            <div className="col-md-7 fixed-right"><UserRightSide /></div>
                         </div>
                     </div>
                 </div>

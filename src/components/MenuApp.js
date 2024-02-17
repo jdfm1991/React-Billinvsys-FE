@@ -80,7 +80,7 @@ const MenuApp = () => {
 
     return (
         <>
-            <div className='container-fluid mt-2'>
+            <div className='container-fluid mt-2 fixed-top'>
                 <div className="card">
                     <Menubar model={items} start={start} end={end} />
                 </div>

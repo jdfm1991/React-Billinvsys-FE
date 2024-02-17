@@ -19,8 +19,8 @@ const UserRightSide = () =>{
                         <div style={{display:displayone}}>
                             <UserFormModal />
                         </div>
-                        <div className="justify-content-center align-items-center g-2 text-center" style={{display:displaytwo}}>
-                            <Image className="logoright" src={logo}/>
+                        <div className="row justify-content-center align-items-center g-2 text-center" style={{display:displaytwo}}>
+                            <Image className="col logodemo" src={logo}/>
                         </div>   
                     </Card.Body>
                     <Card.Footer>

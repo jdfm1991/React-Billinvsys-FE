@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState, useRef} from "react";
 import { MultiSelect } from 'primereact/multiselect';
+import { Accordion, AccordionTab } from 'primereact/accordion';
+import { Checkbox } from "primereact/checkbox";
 import { Message } from 'primereact/message'
 import { Steps } from 'primereact/steps';
 import { Toast } from 'primereact/toast';
@@ -40,6 +42,7 @@ const UserFormModal = () => {
     const [email, setEmail] = useState('')
     const [type, setType] = useState('')
     const [depart, setDepart] = useState([])
+    const [modul, setModul] = useState([])
     const [password, setPassword] = useState('')
     const [status, setStatus] = useState(false)
     const image = useRef()
@@ -57,7 +60,7 @@ const UserFormModal = () => {
             }
         },
         {
-            label: 'Departamento / Mmodulos',
+            label: 'Departamentos / Modulos',
             command: (event) => {
                 $('#form2').show()
                 $('#form1').hide()
@@ -66,14 +69,17 @@ const UserFormModal = () => {
     ];
 
     useEffect( () => {
-        if (user._id) {
+        if (user?._id) {
             setId(user._id)
             setName(user.name)
             setStatus(user.status)
             setEmail(user.email)
             setType(user.type)
             setPassword(user.password)
-            setDepart(department) 
+            setDepart(department)
+            setModul(module)
+            setActiveIndex(0)
+            $('#form1').show()
         } else {
             setId('')
             setName('')
@@ -81,7 +87,8 @@ const UserFormModal = () => {
             setEmail('')
             setType('')
             setPassword('') 
-            setDepart('') 
+            setDepart([]) 
+            setModul([])
         }
         getTypes()
         getDepartment()
@@ -115,7 +122,8 @@ const UserFormModal = () => {
             depart:depart,
             password:password,
             status:status,
-            image:image
+            image:image,
+            modul:modul
         })
 
         setTimeout(() => {
@@ -125,12 +133,65 @@ const UserFormModal = () => {
                
     }
 
+    const onModuleChange = (e) => {
+        let _modul = [...modul];
+
+        if (e.checked)
+            _modul.push(e.value);
+        else
+            _modul = _modul.filter(mod => mod._id !== e.value._id);
+
+        console.log(_modul);
+        setModul(_modul);
+        console.log(_modul);
+    };
+    const itemAccordion = (id) => {
+        var ModDep = ''
+
+        modules.forEach( (mod) => {
+            ModDep = mod.department            
+        });
+
+        if (id !== ModDep) return <Message severity="warn" text='nada' />
+
+        return (
+            <div className="row justify-content-center align-items-center g-2">
+                {
+                    modules.map( mod => (
+                        <div key={mod._id} className="col">
+                            <Checkbox inputId={mod._id} name="module" value={mod} onChange={onModuleChange} checked={ modul.some((item) => item._id === mod._id)}/>
+                            <label htmlFor={mod._id} className="ml-5 mr-2">
+                                {mod.name}
+                            </label>
+                        </div>
+                    ))  
+                }
+            </div>
+        )
+    }
+
+    const accordion = () => {
+        
+        return (
+        
+            department?.map( (dep) => (
+                <AccordionTab key={dep.code} header={dep.name} disabled={enable}>
+                    { itemAccordion(dep.code) }
+                </AccordionTab>
+            ))
+                    
+             
+        )
+        
+    }
+   
     departments.forEach( (dep) => {
         itemSelect.push({
             name: dep.name,
             code: dep._id
         })
     })
+
     return(
         <>
         <Card>
@@ -150,7 +211,7 @@ const UserFormModal = () => {
                                     <Form.Control type="text" className="form-control form-control-sm" name="name" placeholder="Nombre Por Favor" value={ name } onChange={ (e) => setName(e.target.value) } required disabled={enable} />
                                 </Form.Group>
                                 <Form.Group className='col-sm-2 form-check-label'>
-                                    <Form.Check inline label='Estatus' name='status' type='checkbox' checked={ status } onChange={ (e) => setStatus(e.target.checked)} disabled={enable}/>
+                                    <Form.Check inline label='status' name='status' type='checkbox' checked={ status } onChange={ (e) => setStatus(e.target.checked)} disabled={enable}/>
                                 </Form.Group>
                                 <br /><br />
                                 <Form.Label className='col-sm-2 col-form-label'>Email</Form.Label>
@@ -186,10 +247,11 @@ const UserFormModal = () => {
                             </Form.Group>
                         </Form.Group>
                     </div>
-                    <div id="form2" style={{display:'block'}}>
+                    <div id="form2">
                         <Form.Group className='justify-content-center align-items-center g-2 text-center'>
                             <Form.Group className='mb-3 row'>
-                                
+                                <Accordion>{ accordion() }
+                                </Accordion>                                
                             </Form.Group>
                         </Form.Group>
                     </div>

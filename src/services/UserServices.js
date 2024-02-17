@@ -23,7 +23,7 @@ export async function saveDataUser(userData){
         data.append('password',userData.password)
         data.append('image',userData.image)
         for (let i = 0; i < userData.depart.length; i++) {
-            data.append('depart['+i+']',userData.depart[i].code)
+            data.append('depart[]',userData.depart[i].code)
         }
         const res = await axios({
             url:`/user`,
@@ -74,7 +74,7 @@ export async function getModules(){
     }
 }
 
-export async function getDataUser(id){
+export async function UserById(id){
     try {
         const res = await axios({
             url:`/user/${id}`,
@@ -112,7 +112,10 @@ export async function updateDataUser(userData){
         data.append('password',userData.password)
         data.append('image',userData.image)
         for (let i = 0; i < userData.depart.length; i++) {
-            data.append('depart['+i+']',userData.depart[i].code)
+            data.append('depart[]',userData.depart[i].code)
+        }
+        for (let i = 0; i < userData.modul.length; i++) {
+            data.append('modul[]',userData.modul[i]._id)
         }
         const res = await axios({
             url:`/user/${id}`,

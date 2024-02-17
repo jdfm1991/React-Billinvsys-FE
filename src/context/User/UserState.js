@@ -1,5 +1,5 @@
 import React, { useReducer} from "react";
-import { deleteDataUser, getDataUser, getDataUsers, getDepartments, getModules, getUserTypes, saveDataUser, updateDataUser } from "../../services/UserServices";
+import { UserById, deleteDataUser, getDataUsers, getDepartments, getModules, getUserTypes, saveDataUser, updateDataUser } from "../../services/UserServices";
 import UserReducer from "./UserReducer";
 import UserContext from "./UserContext";
 
@@ -72,7 +72,7 @@ const UserState = (props) => {
                 }
             })
         } else{
-            getUser(id)
+            getUserById(id)
             dispatch({
                 type: 'VIEW_MODAL',
                 payload: {view:true,head:'Editar Registro'}
@@ -81,7 +81,7 @@ const UserState = (props) => {
     }
 
     const handleClose = () => {
-        getUser()
+        getUserById()
         dispatch({
             type: 'VIEW_MODAL',
             payload: false
@@ -95,7 +95,7 @@ const UserState = (props) => {
         })
     }
 
-    const statusValidator = async (res) => {
+    const statusValidator = (res) => {
         if (res.status === 500) {
             handleMessage(res.statusText + ' ' + res.data.message)
         }
@@ -109,6 +109,7 @@ const UserState = (props) => {
             handleClose()
             getUsersList()
             handleMessage()
+            getUserById()
         }
     }
 
@@ -136,8 +137,8 @@ const UserState = (props) => {
         })
     }
 
-    const getUser = async (id) => {
-        const res = await getDataUser(id)
+    const getUserById = async (id) => {
+        const res = await UserById(id)
         dispatch({
             type: 'GET_USER',
             payload: {
@@ -148,6 +149,8 @@ const UserState = (props) => {
         })
     }
 
+
+
     const getTypes = async (id) => {
         const res = await getUserTypes()
         dispatch({
@@ -156,15 +159,15 @@ const UserState = (props) => {
         })
     }
 
-    const getModule = async (id) => {
-        const res = await getModules(id)
+    const getModule = async () => {
+        const res = await getModules()
         dispatch({
             type: 'GET_MODULE',
             payload: res.data
         })
     }
 
-    const getDepartment = async (id) => {
+    const getDepartment = async () => {
         const res = await getDepartments()
         dispatch({
             type: 'GET_DEPARTMENT',
@@ -176,7 +179,7 @@ const UserState = (props) => {
         const res = await deleteDataUser(id)
         console.log(res)
         getUsersList()
-        getUser()
+        getUserById()
     }
 
     return(
@@ -198,7 +201,7 @@ const UserState = (props) => {
             module: state.module,
             handleSubmit,
             getUsersList,
-            getUser,
+            getUserById,
             deleteUser,
             handleShow,
             handleClose,
