@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MenuApp from "./components/MenuApp";
 import BodyLayout from "./pages/BodyLayout";
 import UserLayout from "./pages/UserLayout";
+import DepartmentLayout from "./pages/DepartmentLayout";
 import AuthState from "./context/Auth/AuthState";
 import ProtectedViews from "./ProtectedViews";
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" element={ <BodyLayout /> } />
             <Route element={ <ProtectedViews /> }>
               <Route path="/user" element={ <section><UserLayout /></section> } />
+              <Route path="/department" element={ <section><DepartmentLayout /></section> } />
               <Route path="/profile" element={ <section><h1>profile</h1></section> } />
             </Route>
           </Routes>
