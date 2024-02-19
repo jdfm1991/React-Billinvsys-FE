@@ -10,6 +10,7 @@ import UserContext from "../context/User/UserContext";
 const UserLeftSide = () =>{
 
     const {handleShow,handleClose,show,title} = useContext(UserContext)
+    
     return(
         <>
             <div id="letf">

@@ -80,7 +80,7 @@ table thead {
 
 .modal {
   --bs-modal-color: rgb(255, 255, 255);
-  --bs-modal-bg: #140d69b4;
+  --bs-modal-bg: rgba(102, 110, 202, 0.432);
 }
 
 @media (max-width:960px) {
